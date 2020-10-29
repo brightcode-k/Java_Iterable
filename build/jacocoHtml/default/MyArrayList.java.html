@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MyArrayList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Javaitarable</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">MyArrayList.java</span></div><h1>MyArrayList.java</h1><pre class="source lang-java linenums">import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+//public class MyArrayList&lt;E&gt;implements Iterable&lt;E&gt;{
+//
+//    private static final int DEFAULT_CAPACITY = 10;
+//
+//    private int theSize;
+//    private E[] theItems;
+//
+//    public MyArrayList() {
+//        clear();
+//    }
+//
+//    public void clear() {
+//        theSize = 0;
+//        ensureCapacity(DEFAULT_CAPACITY);
+//    }
+//
+//    public void ensureCapacity(int newCapacity) {
+//        if (newCapacity &lt; theSize) return;
+//
+//        E[] old = theItems;
+//        theItems = (E[]) new Object[newCapacity];
+//        for (int i = 0; i &lt; size(); i++) {
+//            theItems[i] = old[i];
+//        }
+//    }
+//
+//    public int size() {
+//        return theSize;
+//    }
+//
+//    public boolean isEmpty() {
+//        return size() == 0;
+//    }
+//
+//    public void trimToSize() {
+//        ensureCapacity(size());
+//    }
+//
+//    public E get(int index) {
+//        if (index &lt; 0 || index &gt;= size()) throw new ArrayIndexOutOfBoundsException();
+//
+//        return theItems[index];
+//    }
+//
+//    public E set(int index, E newVal) {
+//        if (index &lt; 0 || index &gt;= size()) throw new ArrayIndexOutOfBoundsException();
+//        E old = theItems[index];
+//        theItems[index] = newVal;
+//        return old;
+//    }
+//
+//
+//    public boolean add(E element) {
+//        add(size(), element);
+//        return true;
+//    }
+//
+//
+//    public void add(int index, E element) {
+//        if (theItems.length == size()) ensureCapacity(size() * 2 + 1);
+//        for (int i = theSize; i &gt; index; i--) {
+//            theItems[i] = theItems[i - 1];
+//        }
+//        theItems[index] = element;
+//        theSize++;
+//    }
+//
+//    public E remove(int index) {
+//        E removeItem = theItems[index];
+//        for (int i = index; i &lt; size() - 1; i++) {
+//            theItems[i] = theItems[i + 1];
+//        }
+//        theSize--;
+//        return removeItem;
+//    }
+//
+//    @Override
+//    public Iterator&lt;E&gt; iterator() {
+//        return new ArrayListIterator();
+//    }
+//    private class ArrayListIterator implements java.util.Iterator&lt;E&gt; {
+//
+//        private int current = 0;
+//
+//        public boolean hasNext() {
+//            return current &lt; size();
+//        }
+//
+//        public E next() {
+//            if (!hasNext()) throw new java.util.NoSuchElementException();
+//            return theItems[current++];
+//        }
+//
+//        public void remove() {
+//            MyArrayList.this.remove(--current);
+//        }
+//    }
+//}
+
+<span class="fc" id="L105">class MyIterator{</span>
+    public static &lt;T&gt; Iterable&lt;T&gt; filter(Iterable&lt;T&gt; unfiltered, Predicate&lt;? super T&gt; retainIfTrue) {
+<span class="fc" id="L107">        List&lt;T&gt; result = new LinkedList&lt;&gt;();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        for (T temp: unfiltered) {</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">            if (retainIfTrue.test(temp))</span>
+<span class="fc" id="L110">                result.add(temp);</span>
+<span class="fc" id="L111">        }</span>
+
+<span class="fc" id="L113">        return result;</span>
+    }
+    public static &lt;F, T&gt; Iterable&lt;T&gt; transform(Iterable&lt;F&gt; fromIterable,
+                                               Function&lt;? super F, ? extends T&gt; function)
+    {
+<span class="fc" id="L118">        List&lt;T&gt; result = new LinkedList&lt;&gt;();</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        for (F temp: fromIterable)</span>
+<span class="fc" id="L120">            result.add(function.apply(temp));</span>
+
+<span class="fc" id="L122">        return result;</span>
+    }
+
+}
+//    @Test
+//    void filter_character() {
+//        List&lt;Character&gt; expected = new ArrayList&lt;&gt;();
+//        List&lt;Character&gt; testdata = new ArrayList&lt;&gt;();
+//        expected.add('a');
+//        expected.add('a');
+//        expected.add('a');
+//        testdata.add('a');
+//        testdata.add('a');
+//        testdata.add('b');
+//        testdata.add('b');
+//        testdata.add('c');
+//        testdata.add('a');
+//
+//        Iterable&lt;Character&gt; actual = MyIterator.filter(testdata, character -&gt; character == 'a');
+//
+//        assertEquals(expected, actual);
+//    }
+
+//    @Test
+//    void trst_transform_for_character() {
+//        List&lt;Character&gt; expected = new ArrayList&lt;&gt;();
+//        List&lt;Character&gt; testdata = new ArrayList&lt;&gt;();
+//        expected.add('a');
+//        expected.add('a');
+//        expected.add('+');
+//        expected.add('+');
+//        expected.add('c');
+//        expected.add('a');
+//        testdata.add('a');
+//        testdata.add('a');
+//        testdata.add('b');
+//        testdata.add('b');
+//        testdata.add('c');
+//        testdata.add('a');
+//
+//        Iterable&lt;Character&gt; actual = MyIterator.transform(testdata, character -&gt; {
+//            if (character == 'b') {
+//                return '+';
+//            }
+//            return character;
+//        });
+//
+//        assertEquals(expected, actual);
+//    }
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
